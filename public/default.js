@@ -3,10 +3,7 @@ var game;
 
 
 // setup my socket client
-var socket = io.connect('http://localhost:8080');
-socket.on('message', function (data) {
-    console.log(data.count);
-});
+var socket = io();
 
 
 window.onclick = function(e) {
