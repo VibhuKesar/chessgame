@@ -2,7 +2,18 @@ var express = require('express');
 var app = express();
 app.use(express.static('public')); 
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io').listen(8080);
+var count = 0
+
+io.sockets.on('connection', function(socket) {
+    count++;
+    io.sockets.emit('message', { count: count });
+
+    socket.on('disconnect', function(){
+        count--;
+        io.sockets.emit('message', { count: count });
+    })
+});
 
 var port = process.env.PORT || 3000;
 
